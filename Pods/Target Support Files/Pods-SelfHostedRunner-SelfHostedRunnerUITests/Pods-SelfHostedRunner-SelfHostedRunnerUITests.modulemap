@@ -1,0 +1,6 @@
+framework module Pods_SelfHostedRunner_SelfHostedRunnerUITests {
+  umbrella header "Pods-SelfHostedRunner-SelfHostedRunnerUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
