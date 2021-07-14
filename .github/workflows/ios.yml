@@ -22,9 +22,11 @@ jobs:
           xcrun simctl list
       - name: Test
         run: |
+          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
+          
           xcodebuild \
           -workspace SelfHostedRunner.xcworkspace \
           -scheme SelfHostedRunner \
           -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 12' \
-          test --verbose
+          -destination 'platform=iOS Simulator,name=$device' \
+          test
