@@ -155,7 +155,6 @@
 				5BC138BE070653D80BC72F8A /* Pods-SelfHostedRunnerTests.debug.xcconfig */,
 				8680A3F7A2DFF7462D3412B3 /* Pods-SelfHostedRunnerTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -553,6 +552,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 35U7QPW4X4;
 				INFOPLIST_FILE = SelfHostedRunner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -573,6 +573,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 35U7QPW4X4;
 				INFOPLIST_FILE = SelfHostedRunner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
