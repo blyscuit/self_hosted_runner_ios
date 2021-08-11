@@ -15,19 +15,19 @@ platform :ios do
 
   desc "Sync AppStore match signing on CI"
   lane :syncAppStoreSigningCI do
-    # create_keychain(
-    #     name: keychain_name,
-    #     password: keychain_password,
-    #     default_keychain: true,
-    #     unlock: true,
-    #     timeout: 3600,
-    #     lock_when_sleeps: false
-    # )
+    create_keychain(
+        name: keychain_name,
+        password: keychain_password,
+        default_keychain: true,
+        unlock: true,
+        timeout: 3600,
+        lock_when_sleeps: false
+    )
 
     match(
         type: "appstore",
-        # keychain_name: keychain_name,
-        # keychain_password: keychain_password,
+        keychain_name: keychain_name,
+        keychain_password: keychain_password,
         readonly: true
     )
   end
@@ -43,6 +43,8 @@ platform :ios do
 
   desc 'Build and upload Production app to appstore'
   lane :build_appstore_app do
+    ENV['PRODUCT_NAME'] = Constants.PRODUCT_NAME_PRODUCTION
+    ENV['GSP_NAME'] = Constants.GSP_PRODUCTION
     set_app_version
     bump_build
     gym(
@@ -54,7 +56,7 @@ platform :ios do
         }
       },
       include_bitcode: true,
-      output_name: Constants.PRODUCT_NAME_PRODUCTION
+      output_name: Constants.PRODUCT_NAME_STAGING
     )
   end
 
