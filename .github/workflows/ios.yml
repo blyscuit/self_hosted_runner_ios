@@ -20,6 +20,11 @@ jobs:
       - name: List
         run: |
           xcrun simctl list
+      - name: Get data from Secret
+        run: |
+          echo $EXAMPLE
+        env:
+          EXAMPLE: ${{ secrets.example }}
       - name: Test
         run: |
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}'`
