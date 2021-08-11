@@ -43,8 +43,6 @@ platform :ios do
 
   desc 'Build and upload Production app to appstore'
   lane :build_appstore_app do
-    ENV['PRODUCT_NAME'] = Constants.PRODUCT_NAME_PRODUCTION
-    ENV['GSP_NAME'] = Constants.GSP_PRODUCTION
     set_app_version
     bump_build
     gym(
@@ -56,7 +54,7 @@ platform :ios do
         }
       },
       include_bitcode: true,
-      output_name: Constants.PRODUCT_NAME_STAGING
+      output_name: Constants.PRODUCT_NAME_PRODUCTION
     )
   end
 
