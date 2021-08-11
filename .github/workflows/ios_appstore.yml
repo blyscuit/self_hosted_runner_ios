@@ -1,4 +1,4 @@
-name: deploy_AppStore
+name: Build App Store by Self Hosted Runner
 
 # SECRETS needed:
 ### SSH_PRIVATE_KEY for Match Repo
@@ -30,9 +30,9 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             
-    - name: Bundle install
-      run: |
-        bundle install
+    # - name: Bundle install
+    #   run: |
+    #     bundle install
 
     - name: Cache Pods
       uses: actions/cache@v2

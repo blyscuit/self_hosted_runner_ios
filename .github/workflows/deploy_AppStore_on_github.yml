@@ -1,4 +1,4 @@
-name: deploy_AppStore
+name: Build App Store with Github Runner
 
 # SECRETS needed:
 ### SSH_PRIVATE_KEY for Match Repo
