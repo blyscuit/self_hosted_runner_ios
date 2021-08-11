@@ -1,0 +1,83 @@
+# frozen_string_literal: true
+
+require './Constants'
+
+keychain_name = "github_action_keychain"
+keychain_password = "password"
+
+before_all do
+  ensure_bundle_exec
+end
+
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Sync AppStore match signing on CI"
+  lane :syncAppStoreSigningCI do
+    create_keychain(
+        name: keychain_name,
+        password: keychain_password,
+        default_keychain: true,
+        unlock: true,
+        timeout: 3600,
+        lock_when_sleeps: false
+    )
+
+    match(
+        type: "appstore",
+        keychain_name: keychain_name,
+        keychain_password: keychain_password,
+        readonly: true
+    )
+  end
+
+  # Deploy
+
+  desc 'build develop build'
+  lane :build_develop do
+    builder.build_develop
+  end
+
+  #AppStore
+
+  desc 'Build and upload Production app to appstore'
+  lane :build_appstore_app do
+    ENV['PRODUCT_NAME'] = Constants.PRODUCT_NAME_PRODUCTION
+    ENV['GSP_NAME'] = Constants.GSP_PRODUCTION
+    set_app_version
+    bump_build
+    gym(
+      scheme: Constants.SCHEME_NAME_APP_STORE,
+      export_method: 'app-store',
+      export_options: {
+        provisioningProfiles: {
+          @bundle_identifier_staging.to_s => "match AppStore #{Constants.BUNDLE_ID_STAGING}"
+        }
+      },
+      include_bitcode: true,
+      output_name: Constants.PRODUCT_NAME_STAGING
+    )
+  end
+
+  #Private helper lanes
+
+  desc 'check if any specific version number in build environment'
+  private_lane :set_app_version do
+    # Set up env var MANUAL_VERSION if we need to override the version number
+    if ENV.fetch('MANUAL_VERSION', '') != ''
+      increment_version_number(
+        version_number: ENV['MANUAL_VERSION']
+      )
+    end
+  end
+
+  desc 'set build number with number of commits'
+  private_lane :bump_build do
+    increment_build_number(
+      build_number: number_of_commits,
+      xcodeproj: Constants.PROJECT_PATH
+    )
+  end
+
+end
