@@ -11,7 +11,7 @@ on:
 
 jobs:
         
-  Build: 
+  Build:
     name: Build
     runs-on: self-hosted
     steps:
