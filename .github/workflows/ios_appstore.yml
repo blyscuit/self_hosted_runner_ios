@@ -11,7 +11,7 @@ on:
 
 jobs:
 
-  Build:
+  Queue:
     name: Just checking out
     runs-on: self-hosted
     steps:
