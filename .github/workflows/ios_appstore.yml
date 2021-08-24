@@ -10,7 +10,21 @@ on:
     branches: [ main ]
 
 jobs:
-        
+
+  Build:
+    name: Just checking out
+    runs-on: self-hosted
+    steps:
+
+    - uses: actions/checkout@v2
+    # Set fetch-depth (default: 1) to get whole tree
+      with:
+        fetch-depth: 0
+      
+    - name: Bundle install
+      run: |
+        bundle install
+     
   Build:
     name: Build
     runs-on: self-hosted
